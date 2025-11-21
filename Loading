@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pumpkin Under Construction</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --text: #2e2e2e;
+    --muted: #6b6b6b;
+    --accent: #ff7a00; /* pumpkin orange */
+    --border: #2e2e2e;
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  body {
+    display: grid;
+    place-items: center;
+    background: var(--bg) url('SNSLogoHiRes.jpg') no-repeat center center;
+    background-size: 60%;
+    opacity: 0.95;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text);
+    padding: 2rem;
+  }
+  .card {
+    width: min(520px, 90vw);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    padding: 2rem;
+    text-align: center;
+  }
+  h1 {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    letter-spacing: 0.2px;
+  }
+  .subtitle {
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+  }
+  .loader {
+    height: 32px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(90deg, #fafafa, #f1f1f1);
+  }
+  .bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ffad66, var(--accent));
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.12);
+    transition: width 220ms ease;
+  }
+  .percent {
+    margin-top: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .note {
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .small {
+    font-size: 0.85rem;
+  }
+  .pumpkin-emoji {
+    font-size: 1.4rem;
+    margin-left: 0.25rem;
+  }
+</style>
+</head>
+<body>
+  <main class="card" role="main" aria-label="Pumpkin Under Construction">
+    <h1>Pumpkin Under Construction<span class="pumpkin-emoji" aria-hidden="true">🎃</span></h1>
+    <p class="subtitle">Rendering… please stand by.</p>
+
+    <div class="loader" aria-label="Loading bar">
+      <div class="bar" id="bar"></div>
+    </div>
+    <div class="percent" id="percent" aria-live="polite">Loading… 0%</div>
+
+    <p class="note">
+      If the pumpkin does not finish loading, please <strong>submit a ticket</strong>.
+      <br /><span class="small">(IT Dept → Helpdesk Portal)</span>
+    </p>
+  </main>
+
+<script>
+(function () {
+  const bar = document.getElementById('bar');
+  const pct = document.getElementById('percent');
+
+  let progress = 0;
+  let direction = 1;
+
+  function tick() {
+    progress += direction * Math.floor(Math.random() * 8 + 3);
+    if (progress >= 100) { direction = -1; progress = 100; }
+    if (progress <= 0)   { direction = 1;  progress = 0; }
+
+    bar.style.width = progress + '%';
+    pct.textContent = 'Loading… ' + progress + '%';
+  }
+
+  setInterval(tick, 380);
+})();
+</script>
+</body>
+</html>
